@@ -22,11 +22,19 @@ function backup {
 }
 
 if [ $# -eq 0 ]; then
-	echo "you must provide one parameter"
-	echo "usage: ./change-ssh.sh <foldername>"
-	echo "where <foldername> is a name of a folder in ~/.ssh"
-	echo "or: ./change-ssh.sh clear - backs up the currecnt ssh keys and clears them"
-	exit
+        PUB_KEY=~/.ssh/id_rsa.pub
+        if [ -f $PUB_KEY ]; then
+                printf "Your current key: \n"
+                cat $PUB_KEY
+        fi
+        if [ ! -f $PUB_KEY ]; then
+                printf "No current public key \n"
+        fi
+        echo "you must provide one parameter"
+        echo "usage: ./change-ssh.sh <foldername>"
+        echo "where <foldername> is a name of a folder in ~/.ssh"
+        echo "or: ./change-ssh.sh clear - backs up the currecnt ssh keys and clears them"
+        exit
 fi
 
 echo looking for folder $1 in ~/.ssh
