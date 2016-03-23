@@ -1,6 +1,10 @@
 #!/bin/sh
 
-function backup {
+echo looking for folder $1 in ~/.ssh
+SSH_DIR=~/.ssh
+KEY_DIR=$SSH_DIR/$1
+
+backup() {
 	#look for backup directory
         BACKUP_DIR=$SSH_DIR/backup
         if [ ! -d "$BACKUP_DIR" ]; then
@@ -36,10 +40,6 @@ if [ $# -eq 0 ]; then
         echo "or: ./change-ssh.sh clear - backs up the currecnt ssh keys and clears them"
         exit
 fi
-
-echo looking for folder $1 in ~/.ssh
-SSH_DIR=~/.ssh
-KEY_DIR=$SSH_DIR/$1
 
 if [ "$1" == "clear" ]; then
 	echo running clear
