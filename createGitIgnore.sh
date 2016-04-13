@@ -10,5 +10,11 @@ echo "Looking into $1..."
 echo "Empty directories found: "
 find $1 -depth -type d -empty
 
-echo "Adding .gitignore files to them"
-find $1 -depth -type d -empty -exec touch {}'/'.gitignore \;
+echo ""
+echo "If you wish to create .gitignore files to these directories, then use ./createGitIgnore.sh $1 apply"
+
+
+if [ "$2" == "apply" ]; then
+  echo "Adding .gitignore files to the empty directories"
+  find $1 -depth -type d -empty -exec touch {}'/'.gitignore \;
+fi
