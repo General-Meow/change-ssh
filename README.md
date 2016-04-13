@@ -1,6 +1,6 @@
 # Scripts
 
-## createGitIgnore
+## createGitIgnore.sh
 Providing a directory will add .gitignore files to empty directories
 
 ## change-ssh.sh
