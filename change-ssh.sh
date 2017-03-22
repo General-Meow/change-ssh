@@ -23,6 +23,19 @@ backup() {
                 echo $SSH_DIR/id_rsa.pub found moving to backup directory as id_rsa.pub_$DATE
                 mv $SSH_DIR/id_rsa.pub $BACKUP_DIR/id_rsa.pub_$DATE
         fi
+
+        PEMFILES=`ls -l $SSH_DIR/*.pem 2>/dev/null | wc -l`
+        if [ $PEMFILES != 0 ]; then
+                for FILE in $SSH_DIR/*.pem
+                do
+                    FILENAME=`basename $FILE`
+                    UNDERSCORE=_
+                    NEWFILENAME=`basename $FILE$UNDERSCORE$DATE`
+                    echo $SSH_DIR/$FILENAME found moving to backup directory as $NEWFILENAME
+                    mv $SSH_DIR/$FILENAME $BACKUP_DIR/$NEWFILENAME
+                done
+        fi
+
 }
 
 if [ $# -eq 0 ]; then
@@ -43,7 +56,7 @@ fi
 
 if [ "$1" == "clear" ]; then
 	echo running clear
-	backup	
+	backup
 	exit
 fi
 
@@ -51,14 +64,13 @@ fi
 if [ -d "$KEY_DIR" ]; then
 	echo moving directory to $SSH_DIR;
 	cd $SSH_DIR;
-	
-	#run a backup of files	
+
+	#run a backup of files
 	backup
-	
+
 	echo copying keys from $KEY_DIR
 	cp $KEY_DIR/* .
 fi
 if [ ! -d "$KEY_DIR" ]; then
 	echo $1 does not exist in the $SHH_DIR directory
 fi
-
